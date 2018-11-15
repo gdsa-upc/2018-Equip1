@@ -1,0 +1,13 @@
+clc
+clear all
+
+d = uigetdir(pwd,'/Users/lauramontolio/Desktop/mercat');
+jpegFiles = dir(fullfile(d, '*.jpg'));
+numfiles = length(jpegFiles);
+for k = 1:numfiles
+    filename = strcat(jpegFiles(k).name);
+    foto = imread(filename,'jpg');
+    escala = max(size(foto,1),size(foto,2))/500;
+    foto2 = imresize(foto, [size(foto,1)/escala size(foto,2)/escala]);
+    imwrite(foto2, sprintf('mercat_independencia_%d.jpg',k+150), 'jpg');
+end
