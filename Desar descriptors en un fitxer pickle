@@ -1,0 +1,48 @@
+from keras.applications.vgg19 import VGG19
+from keras.preprocessing import image
+from keras.applications.vgg19 import preprocess_input
+from keras.models import Model
+from keras.utils import normalize
+import numpy as np
+import os, pickle
+from PIL import Image, ImageOps
+
+filename = 'test_desc'
+outfile = open(filename,'wb')
+pickle.dump(test_descriptors,outfile)
+outfile.close()
+
+filename = 'test_desc'
+infile = open(filename,'rb')
+test_dict = pickle.load(infile)
+infile.close()
+print(test_dict)
+#print(new_dict==test_descriptors)
+print(type(test_dict))
+
+filename = 'var_desc'
+outfile = open(filename,'wb')
+pickle.dump(var_descriptors,outfile)
+outfile.close()
+
+filename = 'var_desc'
+infile = open(filename,'rb')
+var_dict = pickle.load(infile)
+infile.close()
+print(var_dict)
+#print(var_dict==test_descriptors)
+print(type(var_dict))
+
+filename = 'train_desc'
+outfile = open(filename,'wb')
+pickle.dump(train_descriptors,outfile)
+outfile.close()
+
+
+filename = 'train_desc'
+infile = open(filename,'rb')
+train_dict = pickle.load(infile)
+infile.close()
+print(train_dict)
+#print(new_dict==test_descriptors)
+print(type(train_dict))
