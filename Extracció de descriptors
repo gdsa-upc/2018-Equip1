@@ -1,0 +1,50 @@
+from keras.applications.vgg19 import VGG19
+from keras.preprocessing import image
+from keras.applications.vgg19 import preprocess_input
+from keras.models import Model
+from keras.utils import normalize
+import numpy as np
+import os, pickle
+from PIL import Image, ImageOps
+
+base_model = VGG19(weights='imagenet')
+model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc2').output)
+test_dir = './base_de_dades/test/images/'#cambiar por test,var y train
+test_image_names = os.listdir(test_dir)
+test_descriptors = np.empty(4096)
+for file in test_image_names:
+    dir2 = os.path.join(test_dir,file)
+    if dir2 != './base_de_dades/test/images/.ipynb_checkpoints':
+        img = image.load_img(dir2,target_size=(224,224))
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        x = preprocess_input(x)
+        test_descriptors=np.vstack((test_descriptors,model.predict(x)))
+        
+base_model = VGG19(weights='imagenet')
+model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc2').output)
+var_dir = './base_de_dades/val/images/'#cambiar por test,var y train
+var_image_names = os.listdir(var_dir)
+var_descriptors = np.empty(4096)
+for file in var_image_names:
+    dir2 = os.path.join(var_dir,file)
+    if dir2 != './base_de_dades/val/images/.ipynb_checkpoints':
+        img = image.load_img(dir2,target_size=(224,224))
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        x = preprocess_input(x)
+        var_descriptors=np.vstack((var_descriptors,model.predict(x)))
+        
+base_model = VGG19(weights='imagenet')
+model = Model(inputs=base_model.input, outputs=base_model.get_layer('fc2').output)
+train_dir = './base_de_dades/train/images/'#cambiar por test,var y train
+train_image_names = os.listdir(train_dir)
+train_descriptors = np.empty(4096)
+for file in train_image_names:
+    dir2 = os.path.join(train_dir,file)
+    if dir2 != './base_de_dades/train/images/.ipynb_checkpoints':
+        img = image.load_img(dir2,target_size=(224,224))
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        x = preprocess_input(x)
+        train_descriptors=np.vstack((train_descriptors,model.predict(x)))
